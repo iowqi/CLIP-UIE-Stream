@@ -155,8 +155,32 @@ class DDPM(BaseModel):
             network = self.netG
             if isinstance(self.netG, nn.DataParallel):
                 network = network.module
-            network.load_state_dict(torch.load(
-                gen_path), strict=(not self.opt['model']['finetune_norm']))
+            # Load checkpoint but allow skipping tensors whose shape differs
+            # (e.g., beta schedule buffers when changing n_timestep at inference).
+            ckpt = torch.load(gen_path, map_location='cpu')
+            # If checkpoint is a state-dict previously saved, use it directly.
+            # Filter out keys that don't match current model's parameter shape.
+            model_state = network.state_dict()
+            filtered_ckpt = {}
+            skipped = []
+            for k, v in ckpt.items():
+                if k in model_state:
+                    try:
+                        if v.shape == model_state[k].shape:
+                            filtered_ckpt[k] = v
+                        else:
+                            skipped.append(k)
+                    except Exception:
+                        # some buffers may not have .shape (unlikely) — skip them
+                        skipped.append(k)
+                else:
+                    skipped.append(k)
+
+            # Load what matches; use non-strict so unmatched keys are left as initialized.
+            network.load_state_dict(filtered_ckpt, strict=False)
+            if skipped:
+                logger.info('Skipped loading %d keys from checkpoint due to shape mismatch or missing: %s',
+                            len(skipped), ','.join(skipped[:5]) + (',...' if len(skipped) > 5 else ''))
             # network.load_state_dict(torch.load(
             #     gen_path), strict=False)
             if self.opt['phase'] == 'train':

@@ -143,8 +143,8 @@ def prepare(raw_img_path, ref_img_path, out_path, n_worker, sizes, resample, lmd
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--path_raw', '-p1', type=str, default='/data/liusx/Pycharm/CLIP-UIE/dataset/demo/raw')
-    parser.add_argument('--path_ref', '-p2', type=str, default='/data/liusx/Pycharm/CLIP-UIE/dataset/demo/ref')
+    parser.add_argument('--path_raw', '-p1', type=str, default='C:\\Users\\iowqi\\Desktop\\RoboMaster\\OpenSource\\UIEDatabase\\raw-890')
+    parser.add_argument('--path_ref', '-p2', type=str, default='C:\\Users\\iowqi\\Desktop\\RoboMaster\\OpenSource\\UIEDatabase\\ref-890')
     parser.add_argument('--out', '-o', type=str, default='./dataset/test_demo')
     parser.add_argument('--size', type=str, default='32, 256')
     parser.add_argument('--n_worker', type=int, default=3)

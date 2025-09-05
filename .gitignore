@@ -130,3 +130,8 @@ dmypy.json
 .pyre/
 
 *.lmdb
+Checkpoint/diffusion_model/I6480000_E3008_gen.pth
+Checkpoint/diffusion_model/I6480000_E3008_opt.pth
+Checkpoint/prompt/iter_1000.pth
+clip_model/RN101.pt
+clip_model/ViT-B-32.pt

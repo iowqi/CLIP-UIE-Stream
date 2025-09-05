@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 from turtle import forward
 import torchvision.transforms as transforms
 import torch
-import clip
+from CLIP import clip
 import torch.nn as nn
 from torch.nn import functional as F
 from CLIP.clip import load
