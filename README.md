@@ -1,3 +1,8 @@
+#基于CLIP-UIE的视频流处理
+默认n_timestep=2000效果较好，由于迭代过程较长对推理端算力要求高，可设n_timestep>200（小于这个值生成的画面将带有明显噪声），通过部署在服务端推流来实现实时画面增强。
+
+以下是原作者README:
+
 <div align="center">
 
 <h1>🌊 Underwater Image Enhancement by Diffusion Model with Customized CLIP-Classifier</h1>
